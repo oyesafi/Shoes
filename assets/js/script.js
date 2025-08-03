@@ -1,11 +1,9 @@
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTPtt5U3y0VP-Fxg6yIw5MfBkEocQcZd-SWRq-s3x2mvtrlqHNwDkjpE9KWJq9hXjBCRIW5wdMUsh3g/pub?gid=0&single=true&output=tsv';
-
 fetch(SHEET_URL)
   .then(response => response.text())
   .then(data => {
     const rows = data.trim().split('\n').map(row => row.split('\t'));
-  
-    const products = rows.slice(1).map(columns => ({
+      const products = rows.slice(1).map(columns => ({
       name: columns[0],
       price: columns[1],
       detail: columns[2],
@@ -16,7 +14,6 @@ fetch(SHEET_URL)
       mainCategory: columns[7],
       rank: columns[8].trim().toLowerCase() === 'true'
     }));
-
 // Populate collection list
 const collectionList = document.getElementById('collection-list');
 if (collectionList) {
@@ -39,7 +36,6 @@ if (collectionList) {
     }
   });
 }
-
     // Populate product list
     const productList = document.getElementById('product-list');
     if (productList) {
@@ -95,10 +91,8 @@ if (collectionList) {
       `;
       return productItem;
     }
-
     // Get the view cart button
     const viewCartBtn = document.getElementById('view-cart-btn');
-
     // Function to view cart
     function viewCart() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -119,12 +113,10 @@ if (collectionList) {
         }
       });
     }
-
     // Add event listener to view cart button
     if (viewCartBtn) {
       viewCartBtn.addEventListener('click', viewCart);
     }
-
     // Function to remove item from cart
     function removeItemFromCart(productId) {
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -133,7 +125,6 @@ if (collectionList) {
       updateCartBadgeCount();
       viewCart();
     }
-
     // Add event listener to remove from cart buttons
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('remove-from-cart')) {
@@ -144,27 +135,22 @@ if (collectionList) {
     // Get the cart and wishlist buttons
     const cartBtn = document.querySelector('.nav-action-btn[aria-label="Cart"]');
     const wishlistBtn = document.querySelector('.nav-action-btn[aria-label="Wishlist"]');
-
     // Get the cart and wishlist badge elements
     const cartBadge = cartBtn.querySelector('.nav-action-badge');
     const wishlistBadge = wishlistBtn.querySelector('.nav-action-badge');
-
     // Function to update the cart badge count
     function updateCartBadgeCount() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       cartBadge.textContent = cart.length;
     }
-
     // Function to update the wishlist badge count
     function updateWishlistBadgeCount() {
       const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
       wishlistBadge.textContent = wishlist.length;
     }
-
     // Call the update functions when the page loads
     updateCartBadgeCount();
     updateWishlistBadgeCount();
-
     // Add event listeners to cart and wishlist buttons
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('card-action-btn')) {
@@ -184,7 +170,6 @@ if (collectionList) {
         }
       }
     });
-
     // Populate CTA list
     const ctaList = document.getElementById('cta-list');
     if (ctaList) {
