@@ -7,11 +7,11 @@ fetch(SHEET_URL)
   
     const products = rows.slice(1).map(columns => ({
       name: columns[0],
-      price: columns¹,
-      detail: columns²,
-      url: columns³,
-      images: columns⁴.split(',').map(img => img.trim()),
-      id: columns⁵,
+      price: columns[1],
+      detail: columns[2],
+      url: columns[3],
+      images: columns[4].split(',').map(img => img.trim()),
+      id: columns[5],
       subCategory: columns[6],
       mainCategory: columns[7],
       rank: columns[8].trim().toLowerCase() === 'true'
@@ -48,46 +48,6 @@ fetch(SHEET_URL)
           const productItem = createProductItem(product);
           productList.appendChild(productItem);
         }
-      });
-    }
-
-    // Filter products
-    const filterList = document.getElementById('filter-list');
-    if (filterList) {
-      const allCategories = ['All', ...new Set(products.map(product => product.mainCategory))];
-      allCategories.forEach(category => {
-        const filterButton = document.createElement('button');
-        filterButton.classList.add('filter-btn');
-        filterButton.textContent = category;
-        filterList.appendChild(filterButton);
-      });
-
-      const filterButtons = document.querySelectorAll('.filter-btn');
-      filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          filterButtons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
-          const category = button.textContent;
-          if (productList) {
-            productList.innerHTML = '';
-            if (category === 'All') {
-              products.forEach(product => {
-                if (product.name && product.price && product.images[0]) {
-                  const productItem = createProductItem(product);
-                  productList.appendChild(productItem);
-                }
-              });
-            } else {
-              const filteredProducts = products.filter(product => product.mainCategory === category);
-              filteredProducts.forEach(product => {
-                if (product.name && product.price && product.images[0]) {
-                  const productItem = createProductItem(product);
-                  productList.appendChild(productItem);
-                }
-              });
-            }
-          }
-        });
       });
     }
 
@@ -135,24 +95,6 @@ fetch(SHEET_URL)
       `;
       return productItem;
     }
-
-    // Add event listeners to cart and wishlist buttons
-    document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('card-action-btn')) {
-        const productId = e.target.getAttribute('data-id');
-        if (e.target.querySelector('ion-icon').getAttribute('name') === 'cart-outline') {
-          let cart = JSON.parse(localStorage.getItem('cart')) || [];
-          cart.push(productId);
-          localStorage.setItem('cart', JSON.stringify(cart));
-          alert('Product added to cart!');
-        } else if (e.target.querySelector('ion-icon').getAttribute('name') === 'heart-outline') {
-          let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-          wishlist.push(productId);
-          localStorage.setItem('wishlist', JSON.stringify(wishlist));
-          alert('Product added to wishlist!');
-        }
-      }
-    });
 
     // Populate CTA list
     const ctaList = document.getElementById('cta-list');
@@ -205,7 +147,6 @@ fetch(SHEET_URL)
     }
   })
   .catch(error => console.error('Error fetching data:', error));
-
 // Navbar toggle
 const overlay = document.querySelector("[data-overlay]");
 const navOpenBtn = document.querySelector("[data-nav-open-btn]");
