@@ -128,13 +128,25 @@ if (collectionList) {
       updateCartBadgeCount();
       viewCart();
     }
-    // Add event listener to remove from cart buttons
-    document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('remove-from-cart')) {
-        const productId = e.target.getAttribute('data-id');
-        removeItemFromCart(productId);
-      }
-    }); 
+ document.addEventListener('click', (e) => {
+  if (e.target.closest('.card-action-btn')) {
+    const button = e.target.closest('.card-action-btn');
+    const productId = button.getAttribute('data-id');
+    if (button.querySelector('ion-icon').getAttribute('name') === 'cart-outline') {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(productId);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartBadgeCount();
+      alert('Product added to cart!');
+    } else if (button.querySelector('ion-icon').getAttribute('name') === 'heart-outline') {
+      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      wishlist.push(productId);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      updateWishlistBadgeCount();
+      alert('Product added to wishlist!');
+    }
+  }
+}); 
     // Get the cart and wishlist buttons
     const cartBtn = document.querySelector('.nav-action-btn[aria-label="Cart"]');
     const wishlistBtn = document.querySelector('.nav-action-btn[aria-label="Wishlist"]');
