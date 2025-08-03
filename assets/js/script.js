@@ -95,7 +95,49 @@ fetch(SHEET_URL)
       `;
       return productItem;
     }
+   // Function to view cart
+function viewCart() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartList = document.getElementById('cart-list');
+  cartList.innerHTML = '';
+  cart.forEach(productId => {
+    // Find the product details from the products array
+    const product = products.find(product => product.id === productId);
+    if (product) {
+      const cartItem = document.createElement('li');
+      cartItem.innerHTML = `
+        <img src="${product.images[0]}" width="50" height="50" alt="${product.name}">
+        <span>${product.name}</span>
+        <span>$${product.price}</span>
+        <button class="remove-from-cart" data-id="${product.id}">Remove</button>
+      `;
+      cartList.appendChild(cartItem);
+    }
+  });
+}
 
+// Add event listener to view cart button
+const viewCartBtn = document.getElementById('view-cart-btn');
+if (viewCartBtn) {
+  viewCartBtn.addEventListener('click', viewCart);
+}
+
+// Function to remove item from cart
+function removeItemFromCart(productId) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart = cart.filter(id => id !== productId);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartBadgeCount();
+  viewCart();
+}
+
+// Add event listener to remove from cart buttons
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('remove-from-cart')) {
+    const productId = e.target.getAttribute('data-id');
+    removeItemFromCart(productId);
+  }
+}); 
     // Get the cart and wishlist buttons
     const cartBtn = document.querySelector('.nav-action-btn[aria-label="Cart"]');
     const wishlistBtn = document.querySelector('.nav-action-btn[aria-label="Wishlist"]');
