@@ -96,6 +96,50 @@ fetch(SHEET_URL)
       return productItem;
     }
 
+    // Get the cart and wishlist buttons
+    const cartBtn = document.querySelector('.nav-action-btn[aria-label="Cart"]');
+    const wishlistBtn = document.querySelector('.nav-action-btn[aria-label="Wishlist"]');
+
+    // Get the cart and wishlist badge elements
+    const cartBadge = cartBtn.querySelector('.nav-action-badge');
+    const wishlistBadge = wishlistBtn.querySelector('.nav-action-badge');
+
+    // Function to update the cart badge count
+    function updateCartBadgeCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cartBadge.textContent = cart.length;
+    }
+
+    // Function to update the wishlist badge count
+    function updateWishlistBadgeCount() {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      wishlistBadge.textContent = wishlist.length;
+    }
+
+    // Call the update functions when the page loads
+    updateCartBadgeCount();
+    updateWishlistBadgeCount();
+
+    // Add event listeners to cart and wishlist buttons
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('card-action-btn')) {
+        const productId = e.target.getAttribute('data-id');
+        if (e.target.querySelector('ion-icon').getAttribute('name') === 'cart-outline') {
+          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          cart.push(productId);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartBadgeCount();
+          alert('Product added to cart!');
+        } else if (e.target.querySelector('ion-icon').getAttribute('name') === 'heart-outline') {
+          let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+          wishlist.push(productId);
+          localStorage.setItem('wishlist', JSON.stringify(wishlist));
+          updateWishlistBadgeCount();
+          alert('Product added to wishlist!');
+        }
+      }
+    });
+
     // Populate CTA list
     const ctaList = document.getElementById('cta-list');
     if (ctaList) {
@@ -131,6 +175,21 @@ fetch(SHEET_URL)
     // Populate Instagram posts
     const instaPostList = document.getElementById('insta-post-list');
     if (instaPostList) {
+      products.slice(0, 8). The Summer Sale Off 50%</h3>
+              <a href="#" class="btn btn-link">
+                <span>Shop Now</span>
+                <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+              </a>
+            </div>
+          `;
+          ctaList.appendChild(ctaItem);
+        }
+      });
+    }
+
+    // Populate Instagram posts
+    const instaPostList = document.getElementById('insta-post-list');
+    if (instaPostList) {
       products.slice(0, 8).forEach(product => {
         if (product.images[0]) {
           const instaPostItem = document.createElement('li');
@@ -148,51 +207,6 @@ fetch(SHEET_URL)
   })
   .catch(error => console.error('Error fetching data:', error));
 
-// Get the cart and wishlist buttons
-const cartBtn = document.querySelector('.nav-action-btn[aria-label="Cart"]');
-const wishlistBtn = document.querySelector('.nav-action-btn[aria-label="Wishlist"]');
-
-// Get the cart and wishlist badge elements
-const cartBadge = cartBtn.querySelector('.nav-action-badge');
-const wishlistBadge = wishlistBtn.querySelector('.nav-action-badge');
-
-// Function to update the cart badge count
-function updateCartBadgeCount() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cartBadge.textContent = cart.length;
-}
-
-// Function to update the wishlist badge count
-function updateWishlistBadgeCount() {
-  const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  wishlistBadge.textContent = wishlist.length;
-}
-
-// Call the update functions when the page loads
-updateCartBadgeCount();
-updateWishlistBadgeCount();
-
-// Add event listeners to cart and wishlist buttons
-document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('card-action-btn')) {
-    const productId = e.target.getAttribute('data-id');
-    if (e.target.querySelector('ion-icon').getAttribute('name') === 'cart-outline') {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push(productId);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartBadgeCount();
-      alert('Product added to cart!');
-    } else if (e.target.querySelector('ion-icon').getAttribute('name') === 'heart-outline') {
-      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-      wishlist.push(productId);
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
-      updateWishlistBadgeCount();
-      alert('Product added to wishlist!');
-    }
-  }
-});
-
-// 
 // Navbar toggle
 const overlay = document.querySelector("[data-overlay]");
 const navOpenBtn = document.querySelector("[data-nav-open-btn]");
