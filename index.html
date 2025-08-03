@@ -1,363 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Footcap - Find your footware</title>
-
-  <!-- 
-    - favicon
-  -->
+  <title>Footcap - Find your footwear</title>
+  <meta name="description" content="Discover the latest footwear collection at Footcap. Shop now and find your perfect pair!">
+  
+  <!-- Favicon -->
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
 
-  <!-- 
-    - custom css link
-  -->
+  <!-- Custom CSS link -->
   <link rel="stylesheet" href="./assets/css/style.css">
 
-  <!-- 
-    - google font link
-  -->
+  <!-- Google Font link -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <!-- 
-    - preload banner
-  -->
+  <!-- Preload banner -->
   <link rel="preload" href="./assets/images/hero-banner.png" as="image">
-
 </head>
 
-
-
 <body id="top">
-
-  <!-- 
-    - #HEADER
-  -->
-
+  <!-- Header -->
   <header class="header" data-header>
     <div class="container">
-
       <div class="overlay" data-overlay></div>
-
       <a href="#" class="logo">
         <img src="./assets/images/logo.svg" width="160" height="50" alt="Footcap logo">
       </a>
 
+      <!-- Navbar -->
       <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
         <ion-icon name="menu-outline"></ion-icon>
       </button>
-
       <nav class="navbar" data-navbar>
-
         <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
           <ion-icon name="close-outline"></ion-icon>
         </button>
-
         <a href="#" class="logo">
           <img src="./assets/images/logo.svg" width="190" height="50" alt="Footcap logo">
         </a>
-
         <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Home</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">About</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Products</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Shop</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Blog</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Contact</a>
-          </li>
-
+          <li class="navbar-item"><a href="#" class="navbar-link">Home</a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link">About</a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link">Products</a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link">Shop</a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link">Blog</a></li>
+          <li class="navbar-item"><a href="#" class="navbar-link">Contact</a></li>
         </ul>
 
+        <!-- Nav actions -->
         <ul class="nav-action-list">
-
           <li>
             <button class="nav-action-btn">
               <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
-
               <span class="nav-action-text">Search</span>
             </button>
           </li>
-
           <li>
             <a href="#" class="nav-action-btn">
               <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-
               <span class="nav-action-text">Login / Register</span>
             </a>
           </li>
-
           <li>
             <button class="nav-action-btn">
               <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
-
               <span class="nav-action-text">Wishlist</span>
-
               <data class="nav-action-badge" value="5" aria-hidden="true">5</data>
             </button>
           </li>
-
           <li>
             <button class="nav-action-btn">
               <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
-
               <data class="nav-action-text" value="318.00">Basket: <strong>$318.00</strong></data>
-
               <data class="nav-action-badge" value="4" aria-hidden="true">4</data>
             </button>
           </li>
-
         </ul>
-
       </nav>
-
     </div>
   </header>
 
-
+  <!-- Main content -->
   <main>
     <article>
-
-      <!-- 
-        - #Ad Featured
-      -->
-
+      <!-- Hero section -->
       <section class="section hero" style="background-image: url('./assets/images/hero-banner.png')">
         <div class="container">
-
-          <h2 class="h1 hero-title">
-            New Summer <strong>Shoes Collection</strong>
-          </h2>
-
-          <p class="hero-text">
-            Competently expedite alternative benefits whereas leading-edge catalysts for change. Globally leverage
-            existing an
-            expanded array of leadership.
-          </p>
-
+          <h2 class="h1 hero-title">New Summer <strong>Shoes Collection</strong></h2>
+          <p class="hero-text">Competently expedite alternative benefits whereas leading-edge catalysts for change. Globally leverage existing an expanded array of leadership.</p>
           <button class="btn btn-primary">
             <span>Shop Now</span>
-
             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
           </button>
-
         </div>
       </section>
 
-      <!-- 
-        - #COLLECTION Api Categories Area
-      -->
-
+      <!-- Collection section -->
       <section class="section collection">
         <div class="container">
-
           <ul class="collection-list has-scrollbar" id="collection-list">
-            <!-- collection items will be populated here -->
+            <!-- Collection items will be populated here -->
           </ul>
-
         </div>
       </section>
 
-      <!-- 
-        - #Show categories Name get from api
-      -->
-
+      <!-- Product section -->
       <section class="section product">
         <div class="container">
-
           <h2 class="h2 section-title">Bestsellers Products</h2>
-
           <ul class="filter-list" id="filter-list">
-            <!-- filter buttons will be populated here -->
+            <!-- Filter buttons will be populated here -->
           </ul>
-
           <ul class="product-list" id="product-list">
-            <!-- products will be populated here -->
+            <!-- Products will be populated here -->
           </ul>
-
         </div>
       </section>
 
-      <!-- 
-        - #show random 2 items get from api 
-      -->
-
+      <!-- CTA section -->
       <section class="section cta">
         <div class="container">
-
           <ul class="cta-list" id="cta-list">
-            <!-- cta items will be populated here -->
+            <!-- CTA items will be populated here -->
           </ul>
-
         </div>
       </section>
 
-      <!-- 
-        - #add random category with image from my api
-      -->
-
+      <!-- Special Cases section -->
       <section class="section special">
         <div class="container">
-
           <div class="special-product" id="special-product">
             <h2 class="h2 section-title">
               <span class="text">Special Product</span>
               <span class="line"></span>
             </h2>
             <ul class="product-list">
-              <!-- product card will be populated here -->
+              <!-- Product card will be populated here -->
             </ul>
           </div>
-
         </div>
       </section>
 
-      <!-- 
-        - #SERVICE
-      -->
-
+      <!-- Service section -->
       <section class="section service">
         <div class="container">
-
           <ul class="service-list">
             <li class="service-item">
               <div class="service-card">
-
                 <div class="card-icon">
                   <img src="./assets/images/service-1.png" width="53" height="28" loading="lazy" alt="Service icon">
                 </div>
-
                 <div>
-                  <h3 class="h4 card-title">Free Shiping</h3>
-
-                  <p class="card-text">
-                    All orders over <span>$150</span>
-                  </p>
+                  <h3 class="h4 card-title">Free Shipping</h3>
+                  <p class="card-text">All orders over <span>$150</span></p>
                 </div>
-
               </div>
             </li>
-
             <li class="service-item">
               <div class="service-card">
-
                 <div class="card-icon">
                   <img src="./assets/images/service-2.png" width="43" height="35" loading="lazy" alt="Service icon">
                 </div>
-
                 <div>
                   <h3 class="h4 card-title">Quick Payment</h3>
-
-                  <p class="card-text">
-                    100% secure payment
-                  </p>
+                  <p class="card-text">100% secure payment</p>
                 </div>
-
               </div>
             </li>
-
             <li class="service-item">
               <div class="service-card">
-
                 <div class="card-icon">
                   <img src="./assets/images/service-3.png" width="40" height="40" loading="lazy" alt="Service icon">
                 </div>
-
                 <div>
                   <h3 class="h4 card-title">Free Returns</h3>
-
-                  <p class="card-text">
-                    Money back in 30 days
-                  </p>
+                  <p class="card-text">Money back in 30 days</p>
                 </div>
-
               </div>
             </li>
-
             <li class="service-item">
               <div class="service-card">
-
                 <div class="card-icon">
                   <img src="./assets/images/service-4.png" width="40" height="40" loading="lazy" alt="Service icon">
                 </div>
-
                 <div>
                   <h3 class="h4 card-title">24/7 Support</h3>
-
-                  <p class="card-text">
-                    Get Quick Support
-                  </p>
+                  <p class="card-text">Get Quick Support</p>
                 </div>
-
               </div>
             </li>
-
           </ul>
-
         </div>
       </section>
 
-      <!-- 
-        - #get images only from given Api
-      -->
-
+      <!-- Instagram posts section -->
       <section class="section insta-post">
-
         <ul class="insta-post-list has-scrollbar" id="insta-post-list">
-          <!-- instagram posts will be populated here -->
+          <!-- Instagram posts will be populated here -->
         </ul>
-
       </section>
-
     </article>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
-    <!-- footer content remains the same -->
+    <!-- Footer content remains the same -->
   </footer>
 
-  <!-- 
-    - #GO TO TOP
-  -->
-
+  <!-- Go to top button -->
   <a href="#top" class="go-top-btn" data-go-top>
     <ion-icon name="arrow-up-outline"></ion-icon>
   </a>
 
-  <!-- 
-    - custom js link
-  -->
+  <!-- Custom JS link -->
   <script src="./assets/js/script.js"></script>
 
-  <!-- 
-    - ionicon link
-  -->
+  <!-- Ionicon link -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 </body>
-
 </html>
