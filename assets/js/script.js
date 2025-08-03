@@ -97,25 +97,31 @@ if (collectionList) {
     // Get the view cart button
     const viewCartBtn = document.getElementById('view-cart-btn');
     // Function to view cart
-    function viewCart() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const cartList = document.getElementById('cart-list');
-      cartList.innerHTML = '';
-      cart.forEach(productId => {
-        // Find the product details from the products array
-        const product = products.find(product => product.id === productId);
-        if (product) {
-          const cartItem = document.createElement('li');
-          cartItem.innerHTML = `
-            <img src="${product.images[0]}" width="50" height="50" alt="${product.name}">
-            <span>${product.name}</span>
-            <span>$${product.price}</span>
+   function viewCart() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartList = document.getElementById('cart-list');
+  cartList.innerHTML = '';
+  cart.forEach(productId => {
+    // Find the product details from the products array
+    const product = products.find(product => product.id === productId);
+    if (product) {
+      const cartItem = document.createElement('li');
+      cartItem.innerHTML = `
+        <div class="cart-item">
+          <img src="${product.images[0]}" width="80" height="80" alt="${product.name}">
+          <div class="cart-item-info">
+            <h3>${product.name}</h3>
+            <p>Price: $${product.price}</p>
             <button class="remove-from-cart" data-id="${product.id}">Remove</button>
-          `;
-          cartList.appendChild(cartItem);
-        }
-      });
+          </div>
+        </div>
+      `;
+      cartList.appendChild(cartItem);
     }
+  });
+}
+
+          
     // Add event listener to view cart button
     if (viewCartBtn) {
       viewCartBtn.addEventListener('click', viewCart);
