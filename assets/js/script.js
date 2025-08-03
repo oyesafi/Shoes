@@ -17,28 +17,28 @@ fetch(SHEET_URL)
       rank: columns[8].trim().toLowerCase() === 'true'
     }));
 
-    // Populate collection list
-    const collectionList = document.getElementByElementById('collection-list');
-    if (collectionList) {
-      const categories = [...new Set(products.map(product => product.mainCategory))].slice(0, 3);
-      categories.forEach(category => {
-        const categoryProducts = products.filter(product => product.mainCategory === category);
-        const randomProduct = categoryProducts[Math.floor(Math.random() * categoryProducts.length)];
-        if (randomProduct && randomProduct.images[0]) {
-          const collectionItem = document.createElement('li');
-          collectionItem.innerHTML = `
-            <div class="collection-card" style="background-image: url('${randomProduct.images[0]}')">
-              <h3 class="h4 card-title">${category}</h3>
-              <a href="category.html?category=${category}" target="_blank" class="btn btn-secondary">
-                <span>Explore All</span>
-                <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-              </a>
-            </div>
-          `;
-          collectionList.appendChild(collectionItem);
-        }
-      });
+// Populate collection list
+const collectionList = document.getElementById('collection-list');
+if (collectionList) {
+  const categories = [...new Set(products.map(product => product.mainCategory))].slice(0, 3);
+  categories.forEach(category => {
+    const categoryProducts = products.filter(product => product.mainCategory === category);
+    const randomProduct = categoryProducts[Math.floor(Math.random() * categoryProducts.length)];
+    if (randomProduct && randomProduct.images[0]) {
+      const collectionItem = document.createElement('li');
+      collectionItem.innerHTML = `
+        <div class="collection-card" style="background-image: url('${randomProduct.images[0]}')">
+          <h3 class="h4 card-title">${category}</h3>
+          <a href="category.html?category=${category}" target="_blank" class="btn btn-secondary">
+            <span>Explore All</span>
+            <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+          </a>
+        </div>
+      `;
+      collectionList.appendChild(collectionItem);
     }
+  });
+}
 
     // Populate product list
     const productList = document.getElementById('product-list');
