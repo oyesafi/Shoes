@@ -1,5 +1,3 @@
-
-
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTPtt5U3y0VP-Fxg6yIw5MfBkEocQcZd-SWRq-s3x2mvtrlqHNwDkjpE9KWJq9hXjBCRIW5wdMUsh3g/pub?gid=0&single=true&output=tsv';
 
 fetch(SHEET_URL)
@@ -7,141 +5,133 @@ fetch(SHEET_URL)
   .then(data => {
     const rows = data.trim().split('\n').map(row => row.split('\t'));
   
-   const products = rows.slice(1).map(columns => ({
-  name: columns[0],
-  price: columns[1],
-  detail: columns[2],
-  url: columns[3],
-  images: columns[4].split(',').map(img => img.trim()),
-  id: columns[5],
-  subCategory: columns[6],
-  mainCategory: columns[7],
-  rank: columns[8].trim().toLowerCase() === 'true'
-}));
+    const products = rows.slice(1).map(columns => ({
+      name: columns[0],
+      price: columns[1],
+      detail: columns[2],
+      url: columns[3],
+      images: columns[4].split(',').map(img => img.trim()),
+      id: columns[5],
+      subCategory: columns[6],
+      mainCategory: columns[7],
+      rank: columns[8].trim().toLowerCase() === 'true'
+    }));
 
-// Get the cart and wishlist buttons
-const cartBtn = document.querySelector('.nav-action-btn[aria-label="Cart"]');
-const wishlistBtn = document.querySelector('.nav-action-btn[aria-label="Wishlist"]');
+    // Get the cart and wishlist buttons
+    const cartBtn = document.querySelector('.nav-action-btn[aria-label="Cart"]');
+    const wishlistBtn = document.querySelector('.nav-action-btn[aria-label="Wishlist"]');
 
-// Get the cart and wishlist badge elements
-const cartBadge = cartBtn.querySelector('.nav-action-badge');
-const wishlistBadge = wishlistBtn.querySelector('.nav-action-badge');
+    // Get the cart and wishlist badge elements
+    const cartBadge = cartBtn.querySelector('.nav-action-badge');
+    const wishlistBadge = wishlistBtn.querySelector('.nav-action-badge');
 
-// Function to update the cart badge count
-function updateCartBadgeCount() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cartBadge.textContent = cart.length;
-}
-
-// Function to update the wishlist badge count
-function updateWishlistBadgeCount() {
-  const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  wishlistBadge.textContent = wishlist.length;
-}
-
-// Call the update functions when the page loads
-updateCartBadgeCount();
-updateWishlistBadgeCount();
-
-// Add event listeners to the add to cart and wishlist buttons
-document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('card-action-btn')) {
-    const productId = e.target.getAttribute('data-id');
-    if (e.target.querySelector('ion-icon').getAttribute('name') === 'cart-outline') {
-      addToCart(productId);
-      updateCartBadgeCount();
-    } else if (e.target.querySelector('ion-icon').getAttribute('name') === 'heart-outline') {
-      addToWishlist(productId);
-      updateWishlistBadgeCount();
+    // Function to update the cart badge count
+    function updateCartBadgeCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cartBadge.textContent = cart.length;
     }
-  }
-});
 
-// Function to add product to cart
-function addToCart(productId) {
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cart.push(productId);
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
+    // Function to update the wishlist badge count
+    function updateWishlistBadgeCount() {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      wishlistBadge.textContent = wishlist.length;
+    }
 
-// Function to add product to wishlist
-function addToWishlist(productId) {
-  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  wishlist.push(productId);
-  localStorage.setItem('wishlist', JSON.stringify(wishlist));
-}
+    // Call the update functions when the page loads
+    updateCartBadgeCount();
+    updateWishlistBadgeCount();
 
-
-
+    // Function to create product item
     function createProductItem(product) {
       const productItem = document.createElement('li');
       productItem.classList.add('product-item');
       productItem.innerHTML = `
         <div class="product-card" tabindex="0">
-
           <figure class="card-banner">
-            <img src="${product.images[0]}" width="312" height="350" loading="lazy"
-              alt="${product.name}" class="image-contain">
-
+            <img src="${product.images[0]}" width="312" height="350" loading="lazy" alt="${product.name}" class="image-contain">
             <div class="card-badge">New</div>
-
             <ul class="card-action-list">
-
               <li class="card-action-item">
                 <button class="card-action-btn" aria-labelledby="card-label-1" data-id="${product.id}">
                   <ion-icon name="cart-outline"></ion-icon>
                 </button>
-
                 <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
               </li>
-
               <li class="card-action-item">
                 <button class="card-action-btn" aria-labelledby="card-label-2" data-id="${product.id}">
                   <ion-icon name="heart-outline"></ion-icon>
                 </button>
-
-                <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+                <div class="card-action-tooltip" id="card-label-2">Add to Wishlist</div>
               </li>
-
               <li class="card-action-item">
                 <button class="card-action-btn" aria-labelledby="card-label-3">
                   <ion-icon name="eye-outline"></ion-icon>
                 </button>
-
                 <div class="card-action-tooltip" id="card-label-3">Quick View</div>
               </li>
-
             </ul>
           </figure>
-
           <div class="card-content">
-
             <div class="card-cat">
               <a href="#" class="card-cat-link">${product.mainCategory}</a> /
               <a href="#" class="card-cat-link">${product.subCategory}</a>
             </div>
-
             <h3 class="h3 card-title">
               <a href="#" data-id="${product.id}">${product.name}</a>
             </h3>
-
             <data class="card-price" value="${product.price}">$${product.price}</data>
-
           </div>
-
         </div>
       `;
       return productItem;
     }
 
-    // filter products
+    // Populate collection list
+    const collectionList = document.getElementById('collection-list');
+    const categories = [...new Set(products.map(product => product.mainCategory))].slice(0, 3);
+    categories.forEach(category => {
+      const categoryProducts = products.filter(product => product.mainCategory === category);
+      const randomProduct = categoryProducts[Math.floor(Math.random() * categoryProducts.length)];
+      if (randomProduct && randomProduct.images[0]) {
+        const collectionItem = document.createElement('li');
+        collectionItem.innerHTML = `
+          <div class="collection-card" style="background-image: url('${randomProduct.images[0]}')">
+            <h3 class="h4 card-title">${category}</h3>
+            <a href="category.html?category=${category}" target="_blank" class="btn btn-secondary">
+              <span>Explore All</span>
+              <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+            </a>
+          </div>
+        `;
+        collectionList.appendChild(collectionItem);
+      }
+    });
+
+    // Populate product list
+    const productList = document.getElementById('product-list');
+    products.forEach(product => {
+      if (product.name && product.price && product.images[0]) {
+        const productItem = createProductItem(product);
+        productList.appendChild(productItem);
+      }
+    });
+
+    // Filter products
+    const filterList = document.getElementById('filter-list');
+    const allCategories = ['All', ...new Set(products.map(product => product.mainCategory))];
+    allCategories.forEach(category => {
+      const filterButton = document.createElement('button');
+      filterButton.classList.add('filter-btn');
+      filterButton.textContent = category;
+      filterList.appendChild(filterButton);
+    });
+
     const filterButtons = document.querySelectorAll('.filter-btn');
     filterButtons.forEach(button => {
       button.addEventListener('click', () => {
         filterButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
         const category = button.textContent;
-        const productList = document.getElementById('product-list');
         productList.innerHTML = '';
         if (category === 'All') {
           products.forEach(product => {
@@ -162,67 +152,27 @@ function addToWishlist(productId) {
       });
     });
 
-    // populate collection list
-    const collectionList = document.getElementById('collection-list');
-    const categories = [...new Set(products.map(product => product.mainCategory))].slice(0, 3);
-    categories.forEach(category => {
-      const categoryProducts = products.filter(product => product.mainCategory === category);
-      const randomProduct = categoryProducts[Math.floor(Math.random() * categoryProducts.length)];
-      if (randomProduct && randomProduct.images[0]) {
-        const collectionItem = document.createElement('li');
-        collectionItem.innerHTML = `
-          <div class="collection-card" style="background-image: url('${randomProduct.images[0]}')">
-            <h3 class="h4 card-title">${category}</h3>
-
-            <a href="category.html?category=${category}" target="_blank" class="btn btn-secondary">
-              <span>Explore All</span>
-
-              <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-            </a>
-          </div>
-        `;
-        collectionList.appendChild(collectionItem);
-      }
-    });
-
-    // populate product list
-    const productList = document.getElementById('product-list');
-    products.forEach(product => {
-      if (product.name && product.price && product.images[0]) {
-        const productItem = createProductItem(product);
-        productList.appendChild(productItem);
-      }
-    });
-
     // Add event listeners to cart and wishlist buttons
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('card-action-btn')) {
         const productId = e.target.getAttribute('data-id');
         if (e.target.querySelector('ion-icon').getAttribute('name') === 'cart-outline') {
-          addToCart(productId);
+          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          cart.push(productId);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartBadgeCount();
+          alert('Product added to cart!');
         } else if (e.target.querySelector('ion-icon').getAttribute('name') === 'heart-outline') {
-          addToWishlist(productId);
+          let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+          wishlist.push(productId);
+          localStorage.setItem('wishlist', JSON.stringify(wishlist));
+          updateWishlistBadgeCount();
+          alert('Product added to wishlist!');
         }
       }
     });
 
-    // Add to cart function
-    function addToCart(productId) {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push(productId);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert('Product added to cart!');
-    }
-
-    // Add to wishlist function
-    function addToWishlist(productId) {
-      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-      wishlist.push(productId);
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
-      alert('Product added to wishlist!');
-    }
-
-    // populate cta list
+    // Populate CTA list
     const ctaList = document.getElementById('cta-list');
     products.slice(0, 2).forEach(product => {
       if (product.name && product.images[0]) {
@@ -230,12 +180,9 @@ function addToWishlist(productId) {
         ctaItem.innerHTML = `
           <div class="cta-card" style="background-image: url('${product.images[0]}')">
             <p class="card-subtitle">${product.name}</p>
-
             <h3 class="h2 card-title">The Summer Sale Off 50%</h3>
-
             <a href="#" class="btn btn-link">
               <span>Shop Now</span>
-
               <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
             </a>
           </div>
@@ -244,7 +191,7 @@ function addToWishlist(productId) {
       }
     });
 
-    // populate special product
+    // Populate special product
     const specialProduct = document.getElementById('special-product');
     const productListSpecial = specialProduct.querySelector('.product-list');
     const lastProduct = products[products.length - 1];
@@ -253,16 +200,14 @@ function addToWishlist(productId) {
       productListSpecial.appendChild(productItem);
     }
 
-    // populate instagram posts
+    // Populate Instagram posts
     const instaPostList = document.getElementById('insta-post-list');
     products.slice(0, 8).forEach(product => {
       if (product.images[0]) {
         const instaPostItem = document.createElement('li');
         instaPostItem.classList.add('insta-post-item');
         instaPostItem.innerHTML = `
-          <img src="${product.images[0]}" width="100" height="100" loading="lazy" alt="Instagram post"
-            class="insta-post-banner image-contain">
-
+          <img src="${product.images[0]}" width="100" height="100" loading="lazy" alt="Instagram post" class="insta-post-banner image-contain">
           <a href="#" class="insta-post-link">
             <ion-icon name="logo-instagram"></ion-icon>
           </a>
@@ -273,8 +218,7 @@ function addToWishlist(productId) {
   })
   .catch(error => console.error('Error fetching data:', error));
 
-
-// Navbar Toggle
+// Navbar toggle
 const overlay = document.querySelector("[data-overlay]");
 const navOpenBtn = document.querySelector("[data-nav-open-btn]");
 const navbar = document.querySelector("[data-navbar]");
@@ -298,65 +242,6 @@ navLinks.forEach(link => {
   });
 });
 
-// Toggle wishlist popup
-document.querySelector('.nav-action-btn[aria-label="Wishlist"]').addEventListener('click', () => {
-  document.getElementById('wishlist-popup').classList.toggle('show');
-});
-
-// Toggle cart popup
-document.querySelector('.nav-action-btn[aria-label="Cart"]').addEventListener('click', () => {
-  document.getElementById('cart-popup').classList.toggle('show');
-});
-
-// Close wishlist popup
-document.querySelector('.close-wishlist-popup').addEventListener('click', () => {
-  document.getElementById('wishlist-popup').classList.remove('show');
-});
-
-// Close cart popup
-document.querySelector('.close-cart-popup').addEventListener('click', () => {
-  document.getElementById('cart-popup').classList.remove('show');
-});
-
-// Populate wishlist list
-function populateWishlistList() {
-  const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  const wishlistList = document.getElementById('wishlist-list');
-  wishlistList.innerHTML = '';
-  wishlist.forEach(productId => {
-    const product = products.find(product => product.id === productId);
-    if (product) {
-      const wishlistItem = document.createElement('li');
-      wishlistItem.innerHTML = `
-        <img src="${product.images[0]}" width="50" height="50" alt="${product.name}">
-        <span>${product.name}</span>
-      `;
-      wishlistList.appendChild(wishlistItem);
-    }
-  });
-}
-
-// Populate cart list
-function populateCartList() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const cartList = document.getElementById('cart-list');
-  cartList.innerHTML = '';
-  cart.forEach(productId => {
-    const product = products.find(product => product.id === productId);
-    if (product) {
-      const cartItem = document.createElement('li');
-      cartItem.innerHTML = `
-        <img src="${product.images[0]}" width="50" height="50" alt="${product.name}">
-        <span>${product.name}</span>
-        <span>$${product.price}</span>
-      `;
-      cartList.appendChild(cartItem);
-    }
-  });
-}
-
-
-
 // Header & Go Top Btn Active on Page Scroll
 const header = document.querySelector("[data-header]");
 const goTopBtn = document.querySelector("[data-go-top]");
@@ -375,29 +260,4 @@ window.addEventListener("scroll", () => {
 goTopBtn.addEventListener("click", (e) => {
   e.preventDefault();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// Active Link on Scroll
-const sections = document.querySelectorAll("section");
-const navItems = document.querySelectorAll(".navbar-item");
-
-window.addEventListener("scroll", () => {
-  let currentSection = "";
-
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.offsetHeight;
-
-    if (window.scrollY >= sectionTop - sectionHeight / 3) {
-      currentSection = section.getAttribute("id");
-    }
-  });
-
-  navItems.forEach(item => {
-    item.classList.remove("active");
-
-    if (item.querySelector(".navbar-link").getAttribute("href").substring(1) === currentSection) {
-      item.classList.add("active");
-    }
-  });
 });
