@@ -226,39 +226,25 @@ document.addEventListener('click', (e) => {
       }
     }
 
-    // Populate Instagram posts
-    const instaPostList = document.getElementById('insta-post-list');
-    if (instaPostList) {
-      products.slice(0, 8). The Summer Sale Off 50%</h3>
-              <a href="#" class="btn btn-link">
-                <span>Shop Now</span>
-                <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-              </a>
-            </div>
-          `;
-          ctaList.appendChild(ctaItem);
-        }
-      });
-    }
+  
 
-    // Populate Instagram posts
-    const instaPostList = document.getElementById('insta-post-list');
-    if (instaPostList) {
-      products.slice(0, 8).forEach(product => {
-        if (product.images[0]) {
-          const instaPostItem = document.createElement('li');
-          instaPostItem.classList.add('insta-post-item');
-          instaPostItem.innerHTML = `
-            <img src="${product.images[0]}" width="100" height="100" loading="lazy" alt="Instagram post" class="insta-post-banner image-contain">
-            <a href="#" class="insta-post-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          `;
-          instaPostList.appendChild(instaPostItem);
-        }
-      });
+   // Populate Instagram posts
+const instaPostList = document.getElementById('insta-post-list');
+if (instaPostList) {
+  products.slice(0, 8).forEach(product => {
+    if (product.images[0]) {
+      const instaPostItem = document.createElement('li');
+      instaPostItem.classList.add('insta-post-item');
+      instaPostItem.innerHTML = `
+        <img src="${product.images[0]}" width="100" height="100" loading="lazy" alt="Instagram post" class="insta-post-banner image-contain">
+        <a href="#" class="insta-post-link">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </a>
+      `;
+      instaPostList.appendChild(instaPostItem);
     }
-  })
+  });
+}
   .catch(error => console.error('Error fetching data:', error));
 
 // Navbar toggle
