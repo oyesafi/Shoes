@@ -95,6 +95,18 @@ fetch(SHEET_URL)
       `;
       return productItem;
     }
+
+    // Add a view cart button to your HTML
+// <button id="view-cart-btn">View Cart</button>
+
+// Get the view cart button
+const viewCartBtn = document.getElementById('view-cart-btn');
+
+// Add event listener to view cart button
+if (viewCartBtn) {
+  viewCartBtn.addEventListener('click', viewCart);
+}
+    
    // Function to view cart
 function viewCart() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
